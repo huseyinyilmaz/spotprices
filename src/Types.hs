@@ -20,6 +20,10 @@ instance Read RegionReader where
   readPrec =
     parens
     ( do L.Ident s <- lexP
+         --
+         -- $ stack exec spotprices -- -r us-east-1
+         -- Trace output:
+         -- Left "Failed reading: Failure parsing Region from us"
          case Trace.traceShowId$AwsPrelude.fromText (Text.pack s) of
            Right r  -> return $ RegionReader r
            Left e -> return $ RegionReader (read s)
