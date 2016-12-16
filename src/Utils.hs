@@ -22,6 +22,22 @@ printSpotPrices ss = print_table $ headers : fmap toList ss
                          priceStr=p,
                          instanceType=t} = fmap Text.unpack [z, p, AwsPrelude.toText t]
 
+printSpotPricesScript :: [HawsSpotPrice] -> IO ()
+printSpotPricesScript ss = print_table $ [head $ fmap toList ss]
+  where
+    toList :: HawsSpotPrice -> [String]
+    toList HawsSpotPrice{zone=z,
+                         priceStr=p,
+                         instanceType=t} = fmap Text.unpack [z, p, AwsPrelude.toText t]
+
+printSpotPricesScriptAll :: [HawsSpotPrice] -> IO ()
+printSpotPricesScriptAll ss = print_table $ fmap toList ss
+  where
+    toList :: HawsSpotPrice -> [String]
+    toList HawsSpotPrice{zone=z,
+                         priceStr=p,
+                         instanceType=t} = fmap Text.unpack [z, p, AwsPrelude.toText t]
+
 eitherRead :: Read a => Text.Text -> Either Text.Text a
 eitherRead t = case reads (Text.unpack t) of
                   [(a, "")] -> Right a
