@@ -14,5 +14,5 @@ spotPricesArgs = (,,) <$> (many (optRead "region" 'r'  "Region for spot price lo
 main :: IO ()
 main = do
   (rs, zs, ts) <- options description spotPricesArgs
-  ps <- getSpotPrices (fmap readRegion rs) zs ts
+  ps <- getSpotPrices (fmap readRegion rs) zs (fmap readInstanceType ts)
   printSpotPrices ps

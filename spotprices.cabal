@@ -39,3 +39,6 @@ executable spotprices
                      , GeneralizedNewtypeDeriving
                      , ScopedTypeVariables
                      , FlexibleInstances
+ other-modules:        Aws
+                       Types
+                       Utils
