@@ -4,15 +4,17 @@ import Turtle
 import Aws
 import Utils
 import Types
-
+import Data.Traversable as Traversable
 description = "CLI tool for querying Spot prices on amazon."
 
-spotPricesArgs = (,,) <$> (many (optRead "region" 'r'  "Region for spot price lookup."))
+spotPricesArgs = (,,) <$> (many (optText "region" 'r'  "Region for spot price lookup."))
             <*> (many (optText "zone" 'z' "Availability zone for spot price lookup."))
-            <*> (many (optRead "instancetype" 't' "Instance type for spot price lookup."))
+            <*> (many (optText "instancetype" 't' "Instance type for spot price lookup."))
 
 main :: IO ()
 main = do
-  (rs, zs, ts) <- options description spotPricesArgs
-  ps <- getSpotPrices (fmap readRegion rs) zs (fmap readInstanceType ts)
+  (rrs, rzs, rts) <- options description spotPricesArgs
+  let rs = fmap (fmap readRegion) $ Traversable.traverse eitherRead rrs
+  let ts = fmap (fmap readInstanceType) $ Traversable.traverse eitherRead rts
+  ps <- either die id (getSpotPrices <$> rs <*> pure rzs <*> ts )
   printSpotPrices ps

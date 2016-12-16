@@ -21,3 +21,8 @@ printSpotPrices ss = print_table $ headers : fmap toList ss
     toList HawsSpotPrice{zone=z,
                          priceStr=p,
                          instanceType=t} = fmap Text.unpack [z, p, AwsPrelude.toText t]
+
+eitherRead :: Read a => Text.Text -> Either Text.Text a
+eitherRead t = case reads (Text.unpack t) of
+                  [(a, "")] -> Right a
+                  _ -> Left (Text.concat ["Cannot parse ", t])
