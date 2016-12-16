@@ -5,10 +5,10 @@ import Aws
 import Utils
 import Types
 import Data.Traversable as Traversable
-description = "CLI tool for querying Spot prices on amazon."
+description = "CLI tool for querying amazon EC2 Spot prices."
 
-spotPricesArgs = (,,) <$> (many (optText "region" 'r'  "Region for spot price lookup."))
-            <*> (many (optText "zone" 'z' "Availability zone for spot price lookup."))
+spotPricesArgs = (,,) <$> (many (optText "region" 'r'  "Region for spot price lookup. etc: us-east-1 , NorthVirginia"))
+            <*> (many (optText "zone" 'z' "Availability zone for spot price lookup. etc: us-east-1e"))
             <*> (many (optText "instancetype" 't' "Instance type for spot price lookup."))
 
 main :: IO ()
