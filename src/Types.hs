@@ -8,15 +8,14 @@ import qualified Text.Read.Lex as L
 import Text.Read
 import qualified Data.Text as Text
 import Turtle
--- import Text.ParserCombinators.ReadP
---   ( ReadS
---   , readP_to_S
---   )
+
 import Debug.Trace as Trace
 import qualified Network.AWS.EC2.Types as AwsTypes
 
 newtype RegionReader = RegionReader{readRegion :: AwsPrelude.Region} deriving (Show)
 
+-- source:
+-- http://stackoverflow.com/a/38817257/350127
 instance Read RegionReader where
   readsPrec _ str =
          case AwsPrelude.fromText (Text.pack str) of
