@@ -7,6 +7,7 @@ Get Latest EC2 Spotprices from amazon
 Installation:
 
 ::
+
    $ git clone git@github.com:huseyinyilmaz/spotprices.git
    $ cd spotprices
    $ stack build
